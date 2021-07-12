@@ -27,7 +27,7 @@ input[type="checkbox"] {
     transform: translateY(-8px);
 }
 
-form {
+form.additem {
     text-align: center;
     margin-left: 20px;
 }

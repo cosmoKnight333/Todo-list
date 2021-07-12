@@ -9,10 +9,22 @@ mongoose.connect('mongodb://localhost:27017/todo-listDB', { useNewUrlParser: tru
 const itemSchema = new mongoose.Schema({
     name: String,
 });
-var pdate = new Date();
-var ndate;
+const Item = mongoose.model('Item', itemSchema);
+const item1 = new Item({
+    name: "hello1"
+});
+const item2 = new Item({
+    name: "hello2"
+});
+const item3 = new Item({
+        name: "hello3"
+    })
+    // Item.insertMany([item1, item2, item3], function(err) {
+    //     if (err) { console.log(err); } else console.log("added");
+    // });
+
 app.get('/', function(req, res) {
-    ndate = new Date();
+
     var today = new Date();
     let options = {
         weekday: "long",
@@ -21,18 +33,46 @@ app.get('/', function(req, res) {
     };
     var day = today.toLocaleDateString("en-US", options);
 
-    res.render('list', { todoTitle: day, newlist: items });
+
+    Item.find({}, function(err, item) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('list', { todoTitle: day, newlist: item });
+        }
+    })
+
 
 })
 
 app.post('/', function(req, res) {
-    var item = req.body.newItem;
-    if (item != "") {
-        items.push(item);
-
+    var itemName = req.body.newItem;
+    var item;
+    if (itemName != "") {
+        item = {
+            name: itemName
+        };
+        Item.insertMany([item], function(err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(itemName + " added");
+            }
+        })
     }
 
     res.redirect('/')
+})
+
+app.post('/delete', function(req, res) {
+    rmItemId = (req.body.checkbox);
+    Item.findByIdAndRemove(rmItemId, function(err) {
+        if (err) {
+            console.log(err);
+        }
+
+    });
+    res.redirect('/');
 })
 
 app.listen(4000, function() {

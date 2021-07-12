@@ -26,7 +26,7 @@
                 </div>
             </div>
             <!-- Create todo section -->
-            <form action="/" method="post">
+            <form action="/" method="post" class="additem">
                 <div class="row m-1 p-3">
                     <div class="col col-11 mx-auto">
                         <div class="row  rounded shadow-sm p-2 add-todo-wrapper align-items-center justify-content-center">
@@ -49,18 +49,19 @@
                     <!-- Todo Item 1 -->
                     <% for(var i=0;i<newlist.length;i++){ %>
 
+                        <form method="POST" action="/delete">
+                            <div class="row px-3 align-items-center todo-item m-3">
 
-                        <div class="row px-3 align-items-center todo-item m-3">
+                                <div class="col px-1 m-1 d-flex align-items-center">
 
-                            <div class="col px-1 m-1 d-flex align-items-center">
+                                    <input type="checkbox" class="" value="<%= newlist[i]._id  %>" name="checkbox" onChange='submit();'>
+                                    <p>
+                                        <%=    newlist[i].name;%>
+                                    </p>
+                                </div>
 
-                                <input type="checkbox" class="">
-                                <p>
-                                    <%=    newlist[i];%>
-                                </p>
                             </div>
-
-                        </div>
+                        </form>
                         <% } %>
                 </div>
             </div>
