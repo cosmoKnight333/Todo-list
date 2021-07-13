@@ -6,7 +6,7 @@ const _ = require('lodash');
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(express.static("public"));
-mongoose.connect('mongodb://localhost:27017/todo-listDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://admin-cosmoknight:iamDev1!@cluster0.oxvbw.mongodb.net/todo-listDB', { useNewUrlParser: true, useUnifiedTopology: true });
 const itemSchema = new mongoose.Schema({
     name: String,
 });
@@ -45,21 +45,21 @@ app.post('/', function(req, res) {
     var listName = req.body.list;
 
     if (itemName != "") {
-        let item = new Item({
-            name: itemName
-        });
+
         if (listName === "Your Meds") {
+            let item = new Item({
+                name: itemName
+            });
             item.save();
             res.redirect('/')
 
         } else {
             List.findOne({ name: listName }, function(err, foundList) {
-                foundList.items.push(item);
+                foundList.items.push({ name: itemName });
                 foundList.save();
                 res.redirect('/' + listName);
             })
         }
-        item.save();
     }
 
 })

@@ -94,8 +94,8 @@ input:checked+p {
 /* Style the checkmark/indicator */
 
 .checkcontainer .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 14px;
+    top: 8px;
     width: 10px;
     height: 20px;
     border: solid rgb(126, 160, 71);
